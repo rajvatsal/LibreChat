@@ -142,12 +142,13 @@ export default function Conversation({
     conversationId,
     isPopoverActive,
     setIsPopoverActive,
+    isShiftHeld: isActiveConvo ? isShiftHeld : false,
   };
 
   return (
     <div
       className={cn(
-        'group relative flex h-12 w-full items-center rounded-lg md:h-9',
+        'group relative flex h-12 w-full items-center rounded-lg outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-black dark:focus-visible:ring-white md:h-9',
         isActiveConvo || isPopoverActive
           ? 'bg-surface-active-alt before:absolute before:bottom-1 before:left-0 before:top-1 before:w-0.5 before:rounded-full before:bg-black dark:before:bg-white'
           : 'hover:bg-surface-active-alt',
@@ -236,7 +237,7 @@ export default function Conversation({
           isPopoverActive || isActiveConvo
             ? 'pointer-events-auto scale-x-100 opacity-100'
             : 'pointer-events-none max-w-0 scale-x-0 opacity-0 group-focus-within:pointer-events-auto group-focus-within:max-w-[60px] group-focus-within:scale-x-100 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:max-w-[60px] group-hover:scale-x-100 group-hover:opacity-100',
-          (isPopoverActive || isActiveConvo) && (isShiftHeld ? 'max-w-[60px]' : 'max-w-[28px]'),
+          !isPopoverActive && isActiveConvo && isShiftHeld ? 'max-w-[60px]' : 'max-w-[28px]',
         )}
         // Removing aria-hidden to fix accessibility issue: ARIA hidden element must not be focusable or contain focusable elements
         // but not sure what its original purpose was, so leaving the property commented out until it can be cleared safe to delete.
